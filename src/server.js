@@ -1,11 +1,10 @@
-require("dotenv").config();
-
-const mongoose = require("mongoose");
-const app = require("./app.js");
+import 'dotenv/config'
+import { connect } from "mongoose";
+import app from "./app.js";
 
 async function start() {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    await connect(process.env.MONGO_URI);
     console.log("Banco conectado");
 
  const port = process.env.PORT || 3000;

@@ -1,11 +1,11 @@
 // 1. importa o express
-const express = require('express')
+import express, { json } from 'express'
 
 // 2. cria o app
 const app = express()
 
 //middleware express json
-app.use(express.json())
+app.use(json())
 
 // 3. exporta
-module.exports = app
+export default app

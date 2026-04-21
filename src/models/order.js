@@ -1,21 +1,21 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
 const ORDER_STATUS = ["open", "in_progress", "ready", "closed", "cancelled"];
 
-const orderSchema = new mongoose.Schema({
+const orderSchema = new Schema({
   table: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "Table",
     required: true,
   },
   waiter: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "User",
     required: false,
   },
   items: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "OrderItem",
     },
   ],
@@ -30,4 +30,4 @@ const orderSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Order', orderSchema);
+export default model('Order', orderSchema);

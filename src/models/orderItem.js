@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
 const ORDER_ITEM_STATUS = ['pending', 'in_progress', 'ready', 'delivered', 'cancelled'];
 
-const orderItemSchema = new mongoose.Schema({
+const orderItemSchema = new Schema({
     menuItem: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'MenuItem',
         required: true
     },
@@ -25,4 +25,4 @@ const orderItemSchema = new mongoose.Schema({
     }
 }, { timestamps:true });
 
-module.exports = mongoose.model('OrderItem', orderItemSchema);
+export default model('OrderItem', orderItemSchema);

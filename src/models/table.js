@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
 const TABLE_STATUS = ["free", "busy", "requesting_bill"];
 
-const tableSchema = new mongoose.Schema(
+const tableSchema = new Schema(
   {
     number: {
       type: Number,
@@ -22,4 +22,4 @@ const tableSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-module.exports = mongoose.model("Table", tableSchema);
+export default model("Table", tableSchema);

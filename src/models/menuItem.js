@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const menuItemSchema = new mongoose.Schema({
+const menuItemSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -16,7 +16,7 @@ const menuItemSchema = new mongoose.Schema({
     min: 0,
   },
   category: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "Category",
     required: true,
   },
@@ -29,4 +29,4 @@ const menuItemSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-module.exports = mongoose.model('MenuItem', menuItemSchema);
+export default model('MenuItem', menuItemSchema);
