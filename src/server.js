@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import "dotenv/config";
 import { connect } from "mongoose";
 import app from "./app.js";
 
@@ -7,7 +7,11 @@ async function start() {
     await connect(process.env.MONGO_URI);
     console.log("Banco conectado");
 
- const port = process.env.PORT || 3000;
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI não definida no .env");
+    }
+
+    const port = process.env.PORT || 3000;
     app.listen(port, () => {
       console.log(`Servidor rodando na porta ${port}`);
     });
