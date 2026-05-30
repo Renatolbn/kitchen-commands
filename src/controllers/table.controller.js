@@ -21,11 +21,6 @@ const create = async (req, res) => {
     res.status(201).json(table);
   } catch (err) {
     console.error(err.message);
-
-    if (err.name === "CastError") {
-      return res.status(400).json({ error: "ID inválido" });
-    }
-
     res.status(500).json({ error: "Erro ao criar mesa" });
   }
 };
@@ -83,7 +78,7 @@ const updateStatus = async (req, res) => {
     if (err.name === "CastError") {
       return res.status(400).json({ error: "ID inválido" });
     }
-    res.status(500).json({ error: "Erro ao a tualizar mesa" });
+    res.status(500).json({ error: "Erro ao atualizar mesa" });
   }
 };
 
