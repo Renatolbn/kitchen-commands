@@ -12,12 +12,12 @@ const app = express();
 
 //middleware express json
 app.use(json());
-app.use('/api/categories', categoryRoutes);
-app.use('/api/menu-items', menuItemRoutes);
-app.use('/api/tables', tableRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/order-items', orderItemRoutes);
-app.use('/api/users', userRoutes);
+app.use("/api/category", categoryRoutes);
+app.use("/api/menu-items", menuItemRoutes);
+app.use("/api/tables", tableRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/order-items", orderItemRoutes);
+app.use("/api/users", userRoutes);
 
 // 3. exporta
 export default app;
