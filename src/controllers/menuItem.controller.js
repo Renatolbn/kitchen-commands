@@ -5,6 +5,11 @@ const getAll = async (req, res) => {
     const menuItem = await MenuItem.find().populate("category", "name"); // popular o campo category trazendo apenas o nome da categoria.
     res.json(menuItem);
   } catch (err) {
+    console.error(err.message);
+
+    if (err.name === "CastError") {
+      return res.status(400).json({ error: "ID inválido" });
+    }
     res.status(500).json({ error: "Erro ao buscar item do menu" });
   }
 };
@@ -29,6 +34,12 @@ const update = async (req, res) => {
       return res.status(404).json({ error: "Item do menu não encontrado" });
     res.status(200).json(menuItem);
   } catch (err) {
+    console.error(err.message);
+
+    if (err.name === "CastError") {
+      return res.status(400).json({ error: "ID inválido" });
+    }
+
     res.status(500).json({ error: "Erro ao atualizar item do menu" });
   }
 };
@@ -41,6 +52,12 @@ const remove = async (req, res) => {
       return res.status(404).json({ error: "Item do menu não encontrado" });
     res.status(200).json({ message: "Item do menu removido com sucesso" });
   } catch (err) {
+    console.error(err.message);
+
+    if (err.name === "CastError") {
+      return res.status(400).json({ error: "ID inválido" });
+    }
+
     res.status(500).json({ error: "Erro ao deletar item do menu" });
   }
 };
@@ -59,6 +76,12 @@ const toggleAvailability = async (req, res) => {
 
     res.status(200).json(menuItem);
   } catch (err) {
+    console.error(err.message);
+
+    if (err.name === "CastError") {
+      return res.status(400).json({ error: "ID inválido" });
+    }
+
     res.status(500).json({ error: "Erro ao alterar disponibilidade do item" });
   }
 };
