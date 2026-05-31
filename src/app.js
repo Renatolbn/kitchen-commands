@@ -12,7 +12,7 @@ const app = express();
 
 //middleware express json
 app.use(json());
-app.use("/api/category", categoryRoutes);
+app.use("/api/categories", categoryRoutes);
 app.use("/api/menu-items", menuItemRoutes);
 app.use("/api/tables", tableRoutes);
 app.use("/api/orders", orderRoutes);
