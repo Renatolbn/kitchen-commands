@@ -12,7 +12,7 @@ const getAll = async (req, res) => {
     if (err.name === "CastError") {
       return res.status(400).json({ error: "ID inválido" });
     }
-    res.status(500).json({ error: "Erro ao buscar item da comanda" });
+    res.status(500).json({ error: "Erro ao buscar comanda" });
   }
 };
 
