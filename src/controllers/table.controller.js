@@ -28,7 +28,7 @@ const create = async (req, res) => {
 const update = async (req, res) => {
   try {
     const table = await Table.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     });
 
@@ -68,7 +68,7 @@ const updateStatus = async (req, res) => {
     const table = await Table.findByIdAndUpdate(
       req.params.id,
       { status },
-      { new: true, runValidators: true },
+      { returnDocument: "after", runValidators: true },
     );
     if (!table) return res.status(404).json({ error: "Mesa não encontrada" });
     res.status(200).json(table);

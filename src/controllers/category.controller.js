@@ -28,7 +28,7 @@ const create = async (req, res) => {
 const update = async (req, res) => {
   try {
     const category = await Category.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     });
 

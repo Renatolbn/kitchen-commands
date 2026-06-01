@@ -42,7 +42,7 @@ const create = async (req, res) => {
 const update = async (req, res) => {
   try {
     const order = await Order.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     });
 
@@ -81,7 +81,7 @@ const updateStatus = async (req, res) => {
     const order = await Order.findByIdAndUpdate(
       req.params.id,
       { status },
-      { new: true, runValidators: true },
+      { returnDocument: "after", runValidators: true },
     );
     if (!order) return res.status(404).json({ error: "Pedido não encontrado" });
     res.status(200).json(order);
