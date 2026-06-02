@@ -2,15 +2,17 @@ import { Schema, model } from "mongoose";
 
 const userSchema = new Schema(
   {
-    name: {
+    email: {
       type: String,
       required: true,
+      unique: true,
+      trim: true,
+      lowercase: true, // boa prática pra emails
+      match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Email inválido']
     },
     password: {
       type: String,
       required: true,
-      minlength: 4,
-      maxlength: 4,
     },
     role: {
       type: String,
