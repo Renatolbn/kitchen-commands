@@ -26,8 +26,10 @@ const create = async (req, res) => {
       table,
       items: orderItems.map((item) => item._id),
     });
+
     await Table.findByIdAndUpdate(table, { status: "busy" }); //altera o campo status da mesa para "busy" (ocupada) logo após a criação do pedido.
     res.status(201).json(order);
+    
   } catch (err) {
     console.error(err.message);
 
@@ -83,7 +85,32 @@ const updateStatus = async (req, res) => {
       { status },
       { returnDocument: "after", runValidators: true },
     );
-    if (!order) return res.status(404).json({ error: "Pedido não encontrado" });
+
+    if (!order) {
+      return res.status(404).json({ error: "Pedido não encontrado" });
+    }
+
+    if (status === "closed") {
+      await order.populate({
+        path: "items",
+        populate: {
+          path: "menuItem",
+        },
+      });
+
+      const total = order.items.reduce((acc, item) => {
+        return acc + item.quantity * item.menuItem.price;
+      }, 0);
+
+      order.totalAmount = total;
+
+      await order.save();
+
+      await Table.findByIdAndUpdate(order.table, {
+        status: "free",
+      });
+    }
+
     res.status(200).json(order);
   } catch (err) {
     console.error(err.message);
