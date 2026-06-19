@@ -6,18 +6,20 @@ import tableRoutes from "./routes/table.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import orderItemRoutes from "./routes/orderItem.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import authMiddleware from "./middlewares/auth.middleware.js"
 
 // 2. cria o app
 const app = express();
 
 //middleware express json
 app.use(json());
+app.use("/api/users", userRoutes); // público
+app.use(authMiddleware); // protege todas as rotas abaixo
 app.use("/api/categories", categoryRoutes);
 app.use("/api/menu-items", menuItemRoutes);
 app.use("/api/tables", tableRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/order-items", orderItemRoutes);
-app.use("/api/users", userRoutes);
 
 // 3. exporta
 export default app;
