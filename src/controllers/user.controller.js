@@ -4,8 +4,9 @@ import jwt from "jsonwebtoken";
 
 const getAll = async (req, res) => {
   try {
+    // Busca todos os usuários no banco de dados e os ordena em ordem crescente pelo e-mail (A → Z)
     const user = await User.find().sort({
-      email: 1,
+      email: 1, // ordem crescente
     });
     res.json(user);
   } catch (err) {
@@ -26,7 +27,7 @@ const create = async (req, res) => {
     kitchen: /^\d{6,}$/, //Mínimo 6 caracteres e só números
     waiter: /^[A-Za-z\d]{8,}$/, //Mínimo 8 caracteres e Letras e números
     admin:
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$/ /*Mínimo 10 caracteres e Letra maiúscula, minúscula, número e caractere especial*/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$/, /*Mínimo 10 caracteres e Letra maiúscula, minúscula, número e caractere especial*/
   };
 
   if (!validations[role]) {
