@@ -1,6 +1,11 @@
 import "dotenv/config";
 import { connect } from "mongoose";
 import app from "./app.js";
+import { createServer } from "http";
+import { initSocket } from "./socket.js";
+
+const httpServer = createServer(app);
+initSocket(httpServer);
 
 async function start() {
   try {
@@ -12,9 +17,8 @@ async function start() {
     }
 
     const port = process.env.PORT || 3000;
-    app.listen(port, () => {
-      console.log(`Servidor rodando na porta ${port}`);
-    });
+   httpServer.listen(port, () => console.log(`Servidor rodando na porta ${port}`));
+    
   } catch (err) {
     console.error("Erro na conexão:", err.message);
   }

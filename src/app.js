@@ -14,7 +14,7 @@ const app = express();
 //middleware express json
 app.use(json());
 app.use("/api/users", userRoutes); // público
-app.use(authMiddleware); // protege todas as rotas abaixo
+
 app.use("/api/categories", categoryRoutes);
 app.use("/api/menu-items", menuItemRoutes);
 app.use("/api/tables", tableRoutes);
