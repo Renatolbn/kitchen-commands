@@ -1,28 +1,37 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 
-const ORDER_ITEM_STATUS = ['pending', 'in_progress', 'ready', 'delivered', 'cancelled'];
+const ORDER_ITEM_STATUS = [
+  "pending",
+  "in_progress",
+  "ready",
+  "delivered",
+  "cancelled",
+];
 
-const orderItemSchema = new Schema({
+const orderItemSchema = new Schema(
+  {
     menuItem: {
-        type: Schema.Types.ObjectId,
-        ref: 'MenuItem',
-        required: true
+      type: Schema.Types.ObjectId,
+      ref: "MenuItem",
+      required: true,
     },
     quantity: {
-        type: Number,
-        required: true,
-        min: 1,
-        default: 1
+      type: Number,
+      required: true,
+      min: 1,
+      default: 1,
     },
     note: {
-        type: String,
-        trim: true
+      type: String,
+      trim: true,
     },
     status: {
-        type: String,
-        enum: ORDER_ITEM_STATUS,
-        default: 'pending'
-    }
-}, { timestamps:true });
+      type: String,
+      enum: ORDER_ITEM_STATUS,
+      default: "pending",
+    },
+  },
+  { timestamps: true },
+);
 
-export default model('OrderItem', orderItemSchema);
+export default model("OrderItem", orderItemSchema);

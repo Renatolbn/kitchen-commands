@@ -8,7 +8,7 @@ const userSchema = new Schema(
       unique: true,
       trim: true,
       lowercase: true, // boa prática pra emails
-      match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Email inválido']
+      match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Email inválido"],
     },
     password: {
       type: String,
