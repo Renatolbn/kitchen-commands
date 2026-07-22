@@ -1,4 +1,5 @@
 import OrderItem from "../models/orderItem.js";
+import { getIO } from "../socket.js";
 
 const getAll = async (req, res) => {
   try {
@@ -26,6 +27,12 @@ const updateStatus = async (req, res) => {
     );
     if (!orderItem)
       return res.status(404).json({ error: "Item do pedido não encontrado" });
+    // emite evento pra todos os clientes conectados
+    getIO().emit("item_status_updated", {
+      itemId: orderItem._id,
+      status: orderItem.status,
+    });
+
     res.status(200).json(orderItem);
   } catch (err) {
     console.error(err.message);
