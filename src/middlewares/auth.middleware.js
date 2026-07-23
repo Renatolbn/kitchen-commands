@@ -1,9 +1,7 @@
 import jwt from "jsonwebtoken";
 
 const authMiddleware = (req, res, next) => {
-  console.log("middleware chamado:", req.method, req.path);
-  const authHeader = req.headers.authorization;
-  const token = authHeader && authHeader.split(" ")[1];
+  const token = req.cookies.token;
 
   if (!token) {
     return res.status(401).json({ error: "Token não fornecido" });

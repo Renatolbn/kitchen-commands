@@ -69,7 +69,14 @@ const login = async (req, res) => {
       process.env.JWT_SECRET, // secret
       { expiresIn: "1d" }, // expira em 1 dia
     );
-    res.status(200).json({ token });
+    res.cookie("token", token, {
+      httpOnly: true, // JavaScript não consegue acessar
+      secure: false, // true em produção com HTTPS
+      sameSite: "lax", // proteção contra CSRF
+      maxAge: 24 * 60 * 60 * 1000, // 1 dia em milissegundos
+    });
+
+    res.status(200).json({ message: "Login realizado com sucesso", role: user.role });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ error: "Usuário inválido" });
