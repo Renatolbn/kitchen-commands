@@ -21,7 +21,7 @@ const getAll = async (req, res) => {
 };
 
 const getMe = (req, res) => {
-   res.json(req.user);
+  res.json(req.user);
 };
 
 const create = async (req, res) => {
@@ -30,7 +30,8 @@ const create = async (req, res) => {
   const validations = {
     kitchen: /^\d{6,}$/, //Mínimo 6 caracteres e só números
     waiter: /^[A-Za-z\d]{8,}$/, //Mínimo 8 caracteres e Letras e números
-    admin: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$/, 
+    admin:
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$/,
     /*Mínimo 10 caracteres e Letra maiúscula, minúscula, número e caractere especial*/
   };
 
@@ -54,7 +55,6 @@ const create = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  console.log("login chamado", req.body);
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
@@ -80,7 +80,9 @@ const login = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000, // 1 dia em milissegundos
     });
 
-    res.status(200).json({ message: "Login realizado com sucesso", role: user.role });
+    res
+      .status(200)
+      .json({ message: "Login realizado com sucesso", role: user.role });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ error: "Usuário inválido" });
