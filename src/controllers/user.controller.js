@@ -20,14 +20,18 @@ const getAll = async (req, res) => {
   }
 };
 
+const getMe = (req, res) => {
+   res.json(req.user);
+};
+
 const create = async (req, res) => {
   const { email, password, role } = req.body;
 
   const validations = {
     kitchen: /^\d{6,}$/, //Mínimo 6 caracteres e só números
     waiter: /^[A-Za-z\d]{8,}$/, //Mínimo 8 caracteres e Letras e números
-    admin:
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$/ /*Mínimo 10 caracteres e Letra maiúscula, minúscula, número e caractere especial*/,
+    admin: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$/, 
+    /*Mínimo 10 caracteres e Letra maiúscula, minúscula, número e caractere especial*/
   };
 
   if (!validations[role]) {
@@ -99,4 +103,4 @@ const remove = async (req, res) => {
     res.status(500).json({ error: "Erro ao deletar usuário" });
   }
 };
-export default { getAll, create, login, remove };
+export default { getAll, create, login, remove, getMe };
