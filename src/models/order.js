@@ -29,6 +29,10 @@ const orderSchema = new Schema(
       type: Number,
       default: 0,
     },
+    serviceCharge: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

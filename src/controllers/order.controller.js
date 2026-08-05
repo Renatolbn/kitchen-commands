@@ -1,10 +1,18 @@
+import menuItem from "../models/menuItem.js";
 import Order from "../models/order.js";
 import OrderItem from "../models/orderItem.js";
 import Table from "../models/table.js";
 
 const getAll = async (req, res) => {
   try {
-    const order = await Order.find().populate(["table", "items"]);
+    const order = await Order.find()
+      .populate("table")
+      .populate({
+        path: "items",
+        populate: {
+          path: "menuItem",
+        },
+      });
     res.json(order);
   } catch (err) {
     console.error(err.message);
@@ -18,18 +26,18 @@ const getAll = async (req, res) => {
 
 const create = async (req, res) => {
   try {
-    const { table, items } = req.body;
+    const { table, items, serviceCharge } = req.body;
 
     const orderItems = await OrderItem.insertMany(items);
 
     const order = await Order.create({
       table,
       items: orderItems.map((item) => item._id),
+      serviceCharge,
     });
 
     await Table.findByIdAndUpdate(table, { status: "busy" }); //altera o campo status da mesa para "busy" (ocupada) logo após a criação do pedido.
     res.status(201).json(order);
-    
   } catch (err) {
     console.error(err.message);
 
@@ -77,8 +85,9 @@ const remove = async (req, res) => {
 };
 
 const updateStatus = async (req, res) => {
-  const { status } = req.body;
+  console.log(req.body);
 
+  const { status, serviceCharge } = req.body;
   try {
     const order = await Order.findByIdAndUpdate(
       req.params.id,
@@ -91,18 +100,29 @@ const updateStatus = async (req, res) => {
     }
 
     if (status === "closed") {
+      console.log("Entrou no closed");
+
       await order.populate({
         path: "items",
         populate: {
           path: "menuItem",
         },
       });
+      console.log("Itens:", order.items);
 
       const total = order.items.reduce((acc, item) => {
+        console.log(item.menuItem);
         return acc + item.quantity * item.menuItem.price;
       }, 0);
+      console.log("Total:", total);
 
       order.totalAmount = total;
+
+      if (serviceCharge === "true" || serviceCharge === true) {
+        order.serviceCharge = true;
+        order.totalAmount += total * 0.1;
+      }
+      console.log("Total final:", order.totalAmount);
 
       await order.save();
 
