@@ -1,4 +1,3 @@
-import menuItem from "../models/menuItem.js";
 import Order from "../models/order.js";
 import OrderItem from "../models/orderItem.js";
 import Table from "../models/table.js";
@@ -56,7 +55,9 @@ const update = async (req, res) => {
       runValidators: true,
     });
 
-    if (!order) return res.status(404).json({ error: "Pedido não encontrado" });
+    if (!order) {
+      return res.status(404).json({ error: "Pedido não encontrado" });
+    }
     res.status(200).json(order);
   } catch (err) {
     console.error(err.message);
@@ -68,11 +69,14 @@ const update = async (req, res) => {
     res.status(500).json({ error: "Erro ao atualizar pedido" });
   }
 };
+
 const remove = async (req, res) => {
   try {
     const order = await Order.findByIdAndDelete(req.params.id);
 
-    if (!order) return res.status(404).json({ error: "Pedido não encontrado" });
+    if (!order) {
+      return res.status(404).json({ error: "Pedido não encontrado" });
+    }
     res.status(200).json({ message: "Pedido removido com sucesso" });
   } catch (err) {
     console.error(err.message);
@@ -114,6 +118,7 @@ const updateStatus = async (req, res) => {
         console.log(item.menuItem);
         return acc + item.quantity * item.menuItem.price;
       }, 0);
+
       console.log("Total:", total);
 
       order.totalAmount = total;

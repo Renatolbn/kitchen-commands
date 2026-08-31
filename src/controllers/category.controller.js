@@ -33,7 +33,7 @@ const update = async (req, res) => {
     });
 
     if (!category)
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      {return res.status(404).json({ error: "Categoria não encontrada" });}
     res.status(200).json(category);
   } catch (err) {
     console.error(err.message);
@@ -51,7 +51,7 @@ const remove = async (req, res) => {
     const category = await Category.findByIdAndDelete(req.params.id);
 
     if (!category)
-      return res.status(404).json({ error: "Categoria não encontrada" });
+      {return res.status(404).json({ error: "Categoria não encontrada" });}
     res.status(200).json({ message: "Categoria removida com sucesso" });
   } catch (err) {
     console.error(err.message);

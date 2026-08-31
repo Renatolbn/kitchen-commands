@@ -2,7 +2,7 @@ import MenuItem from "../models/menuItem.js";
 
 const getAll = async (req, res) => {
   try {
-    const menuItem = await MenuItem.find().populate("category", "name"); // popular o campo category trazendo apenas o nome da categoria.
+    const menuItem = await MenuItem.find().populate("category", "name"); // Popular o campo category trazendo apenas o nome da categoria.
     res.json(menuItem);
   } catch (err) {
     console.error(err.message);
@@ -19,6 +19,8 @@ const create = async (req, res) => {
     const menuItem = await MenuItem.create(req.body);
     res.status(201).json(menuItem);
   } catch (err) {
+    console.error(err.message);
+    
     res.status(500).json({ error: "Erro ao criar item do menu" });
   }
 };
@@ -31,7 +33,7 @@ const update = async (req, res) => {
     });
 
     if (!menuItem)
-      return res.status(404).json({ error: "Item do menu não encontrado" });
+      {return res.status(404).json({ error: "Item do menu não encontrado" });}
     res.status(200).json(menuItem);
   } catch (err) {
     console.error(err.message);
@@ -49,7 +51,7 @@ const remove = async (req, res) => {
     const menuItem = await MenuItem.findByIdAndDelete(req.params.id);
 
     if (!menuItem)
-      return res.status(404).json({ error: "Item do menu não encontrado" });
+      {return res.status(404).json({ error: "Item do menu não encontrado" });}
     res.status(200).json({ message: "Item do menu removido com sucesso" });
   } catch (err) {
     console.error(err.message);

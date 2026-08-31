@@ -32,7 +32,7 @@ const update = async (req, res) => {
       runValidators: true,
     });
 
-    if (!table) return res.status(404).json({ error: "Mesa não encontrada" });
+    if (!table) {return res.status(404).json({ error: "Mesa não encontrada" });}
     res.status(200).json(table);
   } catch (err) {
     console.error(err.message);
@@ -49,7 +49,7 @@ const remove = async (req, res) => {
   try {
     const table = await Table.findByIdAndDelete(req.params.id);
 
-    if (!table) return res.status(404).json({ error: "Mesa não encontrada" });
+    if (!table) {return res.status(404).json({ error: "Mesa não encontrada" });}
     res.status(200).json({ message: "Mesa removida com sucesso" });
   } catch (err) {
     console.error(err.message);
@@ -70,7 +70,7 @@ const updateStatus = async (req, res) => {
       { status },
       { returnDocument: "after", runValidators: true },
     );
-    if (!table) return res.status(404).json({ error: "Mesa não encontrada" });
+    if (!table) {return res.status(404).json({ error: "Mesa não encontrada" });}
     res.status(200).json(table);
   } catch (err) {
     console.error(err.message);

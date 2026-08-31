@@ -25,8 +25,10 @@ const updateStatus = async (req, res) => {
       { status },
       { returnDocument: "after", runValidators: true },
     );
-    if (!orderItem)
-      return res.status(404).json({ error: "Item do pedido não encontrado" });
+    if (!orderItem) {
+        return res.status(404).json({ error: "Item do pedido não encontrado" });
+      }
+    
     // emite evento pra todos os clientes conectados
     getIO().emit("item_status_updated", {
       itemId: orderItem._id,
@@ -49,7 +51,7 @@ const remove = async (req, res) => {
     const orderItem = await OrderItem.findByIdAndDelete(req.params.id);
 
     if (!orderItem)
-      return res.status(404).json({ error: "Item do pedido não encontrado" });
+      {return res.status(404).json({ error: "Item do pedido não encontrado" });}
     res.status(200).json({ message: "Item do pedido removido com sucesso" });
   } catch (err) {
     console.error(err.message);
