@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [],
   "author": "Renato Lins",
@@ -21,6 +23,8 @@
     "socket.io": "^4.8.3"
   },
   "devDependencies": {
+    "eslint": "^10.8.1",
+    "globals": "^17.9.0",
     "nodemon": "^3.1.14"
   }
 }
