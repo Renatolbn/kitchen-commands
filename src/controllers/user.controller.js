@@ -21,6 +21,7 @@ const getAll = async (req, res) => {
 };
 
 const getMe = (req, res) => {
+  res.set("Cache-Control", "no-store");
   res.json(req.user);
 };
 
@@ -30,8 +31,7 @@ const create = async (req, res) => {
   const validations = {
     kitchen: /^\d{6,}$/, //Mínimo 6 caracteres e só números
     waiter: /^[A-Za-z\d]{8,}$/, //Mínimo 8 caracteres e Letras e números
-    admin:
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$/,
+    admin: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$/,
     /*Mínimo 10 caracteres e Letra maiúscula, minúscula, número e caractere especial*/
   };
 
@@ -80,20 +80,32 @@ const login = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000, // 1 dia em milissegundos
     });
 
-    res
-      .status(200)
-      .json({ message: "Login realizado com sucesso", role: user.role });
+    res.status(200).json({ message: "Login realizado com sucesso", role: user.role, id: user._id });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ error: "Usuário inválido" });
   }
 };
 
+const logout = (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+  });
+
+  return res.status(200).json({
+    message: "Logout realizado com sucesso",
+  });
+};
+
 const remove = async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
 
-    if (!user) return res.status(404).json({ error: "Usuário não encontrado" });
+    if (!user) {
+      return res.status(404).json({ error: "Usuário não encontrado" });
+    }
     res.status(200).json({ message: "Usuário removido com sucesso" });
   } catch (err) {
     console.error(err.message);
@@ -105,4 +117,4 @@ const remove = async (req, res) => {
     res.status(500).json({ error: "Erro ao deletar usuário" });
   }
 };
-export default { getAll, create, login, remove, getMe };
+export default { getAll, create, login, logout, remove, getMe };
