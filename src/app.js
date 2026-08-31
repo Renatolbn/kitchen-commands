@@ -8,7 +8,7 @@ import tableRoutes from "./routes/table.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import orderItemRoutes from "./routes/orderItem.routes.js";
 import userRoutes from "./routes/user.routes.js";
-import authMiddleware from "./middlewares/auth.middleware.js";
+
 
 // 2. cria o app
 const app = express();
