@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const TABLE_STATUS = ["free", "busy", "requesting_bill"];
+const TABLE_STATUS = ["free", "busy"];
 
 const tableSchema = new Schema(
   {
